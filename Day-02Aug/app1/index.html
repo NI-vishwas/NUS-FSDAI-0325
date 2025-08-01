@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h3>Sentiment Analyzer</h3>
+  <textarea id="textInput" rows="4" cols="50"></textarea><br>
+  <button onclick="analyze()">Analyze</button>
+  <p id="result"></p>
+
+  <script>
+    async function analyze() {
+      const text = document.getElementById("textInput").value;
+      const response = await fetch("http://localhost:8000/analyze", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({text})
+      });
+      const data = await response.json();
+      document.getElementById("result").innerText = `Sentiment: ${data.label} (Score: ${data.score.toFixed(2)})`;
+    }
+  </script>
+</body>
+</html>
